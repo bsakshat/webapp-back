@@ -14,13 +14,16 @@ import java.util.Objects;
 @Path("/")
 public class WebAppService {
 
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @GET //specifies the GET request
+    @Path("{id}") //path to send a GET request where the id is a parameter value
+    @Produces(MediaType.APPLICATION_JSON)  //returns a json object
     public Survey getSurvey(@PathParam("id")int id) {
+        //creates a entitymanager to persist to the database
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("student");
         EntityManager entitymanager = factory.createEntityManager();
+        //finds the record in the database with the provided id attribute
         Survey info = entitymanager.find(Survey.class, id);
+        //if it doesn't exist, throws an exception
         if (info == null) {
             throw new NullPointerException();
         }
@@ -30,9 +33,9 @@ public class WebAppService {
         return info;
     }
 
-    @POST
-    @Path("addSurvey")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @POST //specifies the POST request
+    @Path("addSurvey") //path to send a POST request
+    @Consumes(MediaType.APPLICATION_JSON) //takes in a json object
 
     public void addSurvey(Survey survey) throws SQLException{
         System.out.println("Adding a survey record!");
@@ -41,9 +44,9 @@ public class WebAppService {
         entitymanager.getTransaction().begin();
         //Survey info = entitymanager.find(Survey.class, survey.getId());
 
-        if (survey==null) {
+        /*if (survey==info) {
             throw new SQLException("The record already exists");
-        }
+        }*/
 
         entitymanager.persist(survey);
         System.out.println("Added the survey record");
@@ -66,7 +69,7 @@ public class WebAppService {
 
         List<String> surveys = new ArrayList<>(all.size());
         for (Object object : all) {
-            surveys.add(Objects.toString(object));
+            surveys.add(Objects.toString(object, null));
         }
         return surveys;
 
