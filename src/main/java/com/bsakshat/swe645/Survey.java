@@ -1,13 +1,14 @@
 package com.bsakshat.swe645;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "survey")
-public class Survey {
+@NamedNativeQuery(name="getall", query="select studentID from survey")
+public class Survey implements Serializable {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "studentID", unique = true)
         private int id;
 
@@ -112,6 +113,11 @@ public class Survey {
 
         public void setTdate(String tdate) {
             this.tdate = tdate;
+        }
+
+        @Override
+        public String toString() {
+            return "ID:" + this.id + " Name: " + this.first + " " + this.last + "\n" + "Address: " + this.address + " City: " + this.city + " State: " + this.state + " Zipcode: " + this.zipcode;
         }
 }
 

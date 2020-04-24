@@ -6,7 +6,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.MediaType;
 import java.awt.*;
-
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Path("/")
 public class WebAppService {
@@ -27,4 +30,45 @@ public class WebAppService {
         return info;
     }
 
+    @POST
+    @Path("addSurvey")
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    public void addSurvey(Survey survey) throws SQLException{
+        System.out.println("Adding a survey record!");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("student");
+        EntityManager entitymanager = factory.createEntityManager();
+        entitymanager.getTransaction().begin();
+        //Survey info = entitymanager.find(Survey.class, survey.getId());
+
+        if (survey==null) {
+            throw new SQLException("The record already exists");
+        }
+
+        entitymanager.persist(survey);
+        System.out.println("Added the survey record");
+        entitymanager.getTransaction().commit();
+        entitymanager.close();
+        factory.close();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getAllSurvey()
+    {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("student");
+        EntityManager entitymanager = factory.createEntityManager();
+
+        List<Object> all = null;
+
+        entitymanager.getTransaction().begin();
+        all = entitymanager.createNamedQuery("getall").getResultList();
+
+        List<String> surveys = new ArrayList<>(all.size());
+        for (Object object : all) {
+            surveys.add(Objects.toString(object));
+        }
+        return surveys;
+
+    }
 }
