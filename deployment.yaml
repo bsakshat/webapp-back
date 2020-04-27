@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: swe645-spr20-hw3b
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: swe645-spr20-hw3b
+  template:
+    metadata:
+      labels:
+        app: swe645-spr20-hw3b
+    spec:
+      containers:
+        - name: swe645-spr20-hw3b
+          image: bsakshat/swe645-spr20-hw3b:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: swe645-spr20-hw3b
+  labels:
+    app: swe645-spr20-hw3b
+spec:
+  selector:
+    app: swe645-spr20-hw3b
+  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+      nodePort: 30000
