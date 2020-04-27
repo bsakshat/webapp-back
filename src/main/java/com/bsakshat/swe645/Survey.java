@@ -39,9 +39,42 @@ public class Survey implements Serializable {
         @Column(name = "tdate", nullable = false)
         private String tdate;
 
-        public int getId() {
-            return id;
+        @Column(name = "likes")
+        private String likes;
+
+        @Column(name = "interest")
+        private String interest;
+
+        @Column(name = "recom")
+        private String recom;
+
+        public String getLikes() {
+            return likes;
         }
+
+        public void setLikes(String likes) {
+            this.likes = likes;
+        }
+
+        public String getInterest() {
+            return interest;
+        }
+
+        public void setInterest(String interest) {
+            this.interest = interest;
+        }
+
+        public String getRecom() {
+            return recom;
+        }
+
+        public void setRecom(String recom) {
+            this.recom = recom;
+        }
+
+        public int getId() {
+                return id;
+            }
 
         public String getFirst() {
             return first;

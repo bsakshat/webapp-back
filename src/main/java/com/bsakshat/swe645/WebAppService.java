@@ -5,7 +5,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.MediaType;
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +36,11 @@ public class WebAppService {
     @Path("addSurvey") //path to send a POST request
     @Consumes(MediaType.APPLICATION_JSON) //takes in a json object
 
-    public void addSurvey(Survey survey) throws SQLException{
+    public void addSurvey(Survey survey) {
         System.out.println("Adding a survey record!");
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("student");
         EntityManager entitymanager = factory.createEntityManager();
         entitymanager.getTransaction().begin();
-        //Survey info = entitymanager.find(Survey.class, survey.getId());
-
-        /*if (survey==info) {
-            throw new SQLException("The record already exists");
-        }*/
-
         entitymanager.persist(survey);
         System.out.println("Added the survey record");
         entitymanager.getTransaction().commit();
@@ -62,7 +55,7 @@ public class WebAppService {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("student");
         EntityManager entitymanager = factory.createEntityManager();
 
-        List<Object> all = null;
+        List<Object> all;
 
         entitymanager.getTransaction().begin();
         all = entitymanager.createNamedQuery("getall").getResultList();
@@ -71,6 +64,8 @@ public class WebAppService {
         for (Object object : all) {
             surveys.add(Objects.toString(object, null));
         }
+        entitymanager.close();
+        factory.close();
         return surveys;
 
     }

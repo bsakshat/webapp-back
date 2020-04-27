@@ -9,23 +9,44 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-
     <name>webapp</name>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
-        <finalName>webapp</finalName>
+        <finalName>swe645-spr20-hw3</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
-                <inherited>true</inherited>
                 <configuration>
-                    <source>1.13</source>
-                    <target>1.13</target>
+                    <source>13</source>
+                    <target>13</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                    <webXml>target/swe645-spr20-hw3/WEB-INF/web.xml</webXml>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
     <dependencyManagement>
@@ -61,14 +82,6 @@
             <version>8.5.54</version>
         </dependency>
 
-
-        <!-- JAX-RS
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1</version>
-        </dependency>
-        -->
 
         <!-- Jersey 2.28 -->
         <dependency>

@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>Title</title>
+        <title>Student Survey Form</title>
     </head>
     <body>
-
+        <h1>Student Survey</h1>
     </body>
 </html>
