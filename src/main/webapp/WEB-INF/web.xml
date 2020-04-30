@@ -24,7 +24,7 @@
 
     <servlet-mapping>
         <servlet-name>restapp</servlet-name>
-        <url-pattern>/survey/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
     <filter>
